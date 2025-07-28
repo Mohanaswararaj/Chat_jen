@@ -1,0 +1,45 @@
+pipeline{
+  agents any 
+     environment{
+        docker_image= 'mohanaswararajn/docker_jenkins'
+       }
+
+stages{
+  stage("Check-out"){
+    steps{
+      git branch : 'main', url:' '  
+    }
+}
+  stages("build image"){
+    steps{
+          sh '''
+              echo "building image"
+              docker build -t Dockerfile $docker_image .
+            '''
+        }
+  }
+
+  stage("push the docker images"){
+    steps{
+          script{
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')])
+                    {
+                        sh  '''
+                               echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin || exit 1
+                               docker push $docker_image
+                          '''
+                    }
+                }
+          }
+      }
+
+
+  post {
+        success {
+            echo 'Pipeline completed successfully'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
+    }
+}
