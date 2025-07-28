@@ -16,7 +16,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Building Docker image"
-                    docker build -t $docker_image .
+                    docker build -t $docker_image Ml/
                 '''
             }
         }
