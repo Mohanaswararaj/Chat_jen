@@ -7,7 +7,7 @@ pipeline{
 stages{
   stage("Check-out"){
     steps{
-      git branch : 'main', url:' '  
+      git branch : 'main', url:' https://github.com/Mohanaswararaj/Chat_jen.git'  
     }
 }
   stages("build image"){
