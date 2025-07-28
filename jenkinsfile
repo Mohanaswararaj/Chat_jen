@@ -1,7 +1,7 @@
 pipeline{
   agents any 
      environment{
-        docker_image= 'mohanaswararajn/docker_jenkins'
+        docker_image= 'mohanaswararajn/docker_jenkins:v1'
        }
 
 stages{
